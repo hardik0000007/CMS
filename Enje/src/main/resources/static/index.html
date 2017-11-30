@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html ng-app="myHome">
+
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Person</title>
+    <script type="text/javascript" src="../js/angular.js"></script>
+    <script type="text/javascript" src="../js/angular.min.js"></script>
+    <script type="text/javascript" src="../js/controller/homeController.js"></script>
+    <script type="text/javascript" src="../js/service/homeController.service.js"></script>
+</head>
+
+<body ng-controller="myHome as home">
+    <div>
+        <h1>{{ home.title }}</h1>
+        <button ng-click="home.showStaffDetails()">Show Member Details</button>
+        <table ng-show="home.showTable" border="2">
+            <th style="font-size: medium">ID</th>
+            <th style="font-size: medium">Member Name</th>
+            <th style="font-size: medium">Email Id</th>
+            <th style="font-size: medium">Gender</th>
+            <tr ng-repeat="name in home.memberData">
+                <td>{{name.id}}</td>
+                <td>{{name.userName}}</td>
+                <td>{{name.emailId}}</td>
+                <td>{{name.gender}}</td>
+            </tr>
+        </table>
+        <!-- <select ng-model="home.personEmail">
+            <option ng-repeat="em in home.emailData" value="{{em.id}}">{{em.email}}</option>
+        </select> -->
+    </div>
+</body>
+
+</html>
