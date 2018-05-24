@@ -52,7 +52,6 @@ public class ComplaintController {
 	public ModelAndView saveComplaint(@RequestBody ComplaintDetail complaintDetail, HttpSession session,
 			HttpServletRequest request) {
 
-		System.out.println(request.getParameterMap());
 		String newUniqueComplaintId = complaintsDataService.getUniqueComplaintId();
 
 		ComplaintDetail complaintDetailNew = new ComplaintDetail();
@@ -69,7 +68,22 @@ public class ComplaintController {
 		complaintDetailNew = complaintDetail;
 
 		ComplaintDetail newComplaintDetail = complaintsDataService.save(complaintDetailNew);
-		System.out.println("new record==>" + newComplaintDetail.getId());
 		return null;
+	}
+
+	@RequestMapping(value = "/searchComplaint", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ModelAndView searchComplaint(@RequestBody ComplaintDetail complaintDetail, HttpSession session,
+			HttpServletRequest request) {
+
+		ModelAndView mav = new ModelAndView();
+
+		List<ComplaintDetail> searchComplaintDetail = complaintsDataService.findTop6BySearchComplaint(
+				complaintDetail.getComplaintId(), complaintDetail.getCusomerNumber(),
+				session.getAttribute("username").toString());
+
+		mav.setViewName("searchComplaint");
+		mav.addObject("complaintData", searchComplaintDetail);
+		mav.addObject("dataAvailabel", searchComplaintDetail != null ? "true" : "false");
+		return mav;
 	}
 }

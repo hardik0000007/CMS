@@ -13,8 +13,8 @@ public class ComplaintsDataService {
 	@Autowired
 	private ComplaintsDataRepositiory complaintsDataRepositiory;
 
-	public List<ComplaintDetail> findByUser(String userName) {
-		return complaintsDataRepositiory.findByUser(userName);
+	public List<ComplaintDetail> findTop6ByUserOrderByStatusDescStartDateDesc(String userName) {
+		return complaintsDataRepositiory.findTop6ByUserOrderByStatusDescStartDateDesc(userName);
 	}
 
 	public String getUniqueComplaintId() {
@@ -23,5 +23,9 @@ public class ComplaintsDataService {
 
 	public synchronized ComplaintDetail save(ComplaintDetail complaintDetail) {
 		return complaintsDataRepositiory.save(complaintDetail);
+	}
+
+	public List<ComplaintDetail> findTop6BySearchComplaint(String complaintId, String customerNumber, String userName) {
+		return complaintsDataRepositiory.findTop6BySearchComplaint(complaintId, customerNumber, userName);
 	}
 }

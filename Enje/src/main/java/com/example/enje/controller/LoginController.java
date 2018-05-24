@@ -67,7 +67,8 @@ public class LoginController {
 
 			session.setAttribute("username", user.getUsername());
 
-			List<ComplaintDetail> complaintDetail = complaintsDataService.findByUser(user.getUsername());
+			List<ComplaintDetail> complaintDetail = complaintsDataService
+					.findTop6ByUserOrderByStatusDescStartDateDesc(user.getUsername());
 			List<Complaint> complaintTypes = complaintService.findAll();
 			List<Category> categoryList = categoryService.findAll();
 			List<Status> statusList = statusService.findAll();
@@ -81,6 +82,7 @@ public class LoginController {
 			mav.addObject("complaintTypes", complaintTypes);
 			mav.addObject("categoryList", categoryList);
 			mav.addObject("statusList", statusList);
+			mav.addObject("user", user.getUsername());
 		} else {
 			mav = new ModelAndView("login");
 			mav.addObject("loginMessage", "Username or Password is wrong!!");

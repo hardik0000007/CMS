@@ -62,13 +62,16 @@ public class ComplaintDetail {
 	@Column(name = "phoneno")
 	private String phoneNo;
 
+	@Column(name = "cusomernumber")
+	private String cusomerNumber;
+
 	public ComplaintDetail() {
 		super();
 	}
 
 	public ComplaintDetail(int id, String complaintId, Complaint complaint, Status status, String user,
 			Category category, Productservice productservice, Date startDate, Date dueDate, String reason, String email,
-			String phoneNo) {
+			String phoneNo, String cusomerNumber) {
 		super();
 		this.id = id;
 		this.complaintId = complaintId;
@@ -82,6 +85,7 @@ public class ComplaintDetail {
 		this.reason = reason;
 		this.email = email;
 		this.phoneNo = phoneNo;
+		this.cusomerNumber = cusomerNumber;
 	}
 
 	public int getId() {
@@ -178,6 +182,14 @@ public class ComplaintDetail {
 
 	public void setPhoneNo(String phoneNo) {
 		this.phoneNo = phoneNo;
+	}
+
+	public String getCusomerNumber() {
+		return cusomerNumber;
+	}
+
+	public void setCusomerNumber(String cusomerNumber) {
+		this.cusomerNumber = cusomerNumber;
 	}
 
 }

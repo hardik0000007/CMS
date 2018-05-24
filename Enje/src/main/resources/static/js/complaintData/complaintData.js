@@ -8,11 +8,6 @@ function changeCategory(obj) {
 }
 
 function resetProdnService() {
-	// document.getElementById('pronserv').innerHTML = '<select
-	// name="productnservice" id="productnservice style="overflow: initial;
-	// border:
-	// 3px outset #000000;"> <option value="">--Product &
-	// Service--</option></select>';
 }
 
 function submitForm() {
@@ -37,6 +32,7 @@ function submitForm() {
 				+ document.getElementById("branch").value
 				+ document.getElementById("acctNum").value
 				+ document.getElementById("ccd").value;
+		alert(customerNumber);
 		var raisedDate = document.getElementById("raisedDate").value;
 		var category = document.getElementById("category").value;
 		var productnservice = document.getElementById("productnservice").value;
@@ -53,6 +49,7 @@ function submitForm() {
 				'phoneNo' : mobileno,
 				'email' : emailid,
 				'reason' : reason,
+				'cusomerNumber' : customerNumber,
 				'complaint':{
 					'cid' : cType
 				},
@@ -68,7 +65,6 @@ function submitForm() {
 		};
 		
 		jsonData = JSON.stringify(JSONObject);
-		console.log("jsonData-->"+jsonData);
 		getData_sync("/saveComplaint/", 'displayForm', jsonData, false);
 		
 	}
