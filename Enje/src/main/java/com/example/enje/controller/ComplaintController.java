@@ -3,6 +3,7 @@ package com.example.enje.controller;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -71,19 +72,24 @@ public class ComplaintController {
 		return null;
 	}
 
-	@RequestMapping(value = "/searchComplaint", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ModelAndView searchComplaint(@RequestBody ComplaintDetail complaintDetail, HttpSession session,
-			HttpServletRequest request) {
+	@RequestMapping(value = { "/searchComplaint",
+			"/searchComplaint/{whichPage}" }, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ModelAndView searchComplaint(@PathVariable Optional<String> whichPage,
+			@RequestBody ComplaintDetail complaintDetail, HttpSession session, HttpServletRequest request) {
 
 		ModelAndView mav = new ModelAndView();
+
+		System.out.println(whichPage.get());
 
 		List<ComplaintDetail> searchComplaintDetail = complaintsDataService.findTop6BySearchComplaint(
 				complaintDetail.getComplaintId(), complaintDetail.getCusomerNumber(),
 				session.getAttribute("username").toString());
 
+		System.out.println("searchComplaint-->" + searchComplaintDetail.size());
+
 		mav.setViewName("searchComplaint");
 		mav.addObject("complaintData", searchComplaintDetail);
 		mav.addObject("dataAvailabel", searchComplaintDetail != null ? "true" : "false");
-		return mav;
+		return null;
 	}
 }

@@ -48,5 +48,15 @@ function searchCancel()
 	document.getElementById('custNumSearch').value='';
 	document.getElementById("complaintDiv").style.display='';
 	document.getElementById("searchComplaintDiv").style.display='none';
-	
 }
+
+function getComplaintDetail(complaintId)
+{
+	var JSONObject = {
+			'complaintId':complaintId
+	};
+	
+	jsonData = JSON.stringify(JSONObject);
+	getData_sync("/searchComplaint/updatePage", 'searchComplaintDiv', jsonData, false);
+}
+

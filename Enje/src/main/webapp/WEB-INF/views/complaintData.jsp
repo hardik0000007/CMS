@@ -48,7 +48,7 @@
 												</c:otherwise>
 											</c:choose> ${complaintData.status.statusType}
 											</div></td>
-										<td>${complaintData.complaintId}</td>
+										<td><a href="#" style="text-decoration: underline;"   onclick="getComplaintDetail('${complaintData.complaintId}')">${complaintData.complaintId}</a></td>
 										<td>${complaintData.complaint.complaintType}</td>
 										<td>${complaintData.category.mainCategory}</td>
 										<td>${complaintData.productservice.mainProdService}</td>
