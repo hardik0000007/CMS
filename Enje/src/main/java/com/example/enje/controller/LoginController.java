@@ -73,7 +73,7 @@ public class LoginController {
 			List<Category> categoryList = categoryService.findAll();
 			List<Status> statusList = statusService.findAll();
 
-			System.out.println(statusList.size());
+			System.out.println("In Login Controller-->" + complaintTypes.size());
 
 			mav = new ModelAndView("welcome");
 			mav.addObject("userData", findUser);

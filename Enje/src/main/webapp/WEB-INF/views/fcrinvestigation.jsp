@@ -3,7 +3,8 @@
 	style="display: none; width: 100%">
 	<div id="displayForm" style="display: block;"></div>
 	<form id="complaintForm" name="complaintForm">
-		<table class="ui celled table tablet stackable">
+		<table class="ui celled table tablet stackable"
+			id="insertComplaintForm">
 			<tr>
 				<td><label>Complaint Type</label></td>
 				<td>
@@ -110,6 +111,9 @@
 					type="button" class="ui red button" value="Cancel" id="cancelBtn"
 					name="cancelBtn"></td>
 			</tr>
+		</table>
+		<table class="ui celled table tablet stackable"
+			id="updateComplaintForm" style="display: none">
 		</table>
 	</form>
 	<script>

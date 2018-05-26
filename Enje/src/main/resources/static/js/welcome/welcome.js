@@ -56,7 +56,13 @@ function getComplaintDetail(complaintId)
 			'complaintId':complaintId
 	};
 	
+	
+	document.getElementById('complaintDiv').style.display='none';
+	document.getElementById('fcrinvestigationDiv').style.display='';
+	document.getElementById('insertComplaintForm').style.display='none';
+	document.getElementById('updateComplaintForm').style.display='';
+	
 	jsonData = JSON.stringify(JSONObject);
-	getData_sync("/searchComplaint/updatePage", 'searchComplaintDiv', jsonData, false);
+	getData_sync("/searchComplaint/updatePage", 'updateComplaintForm', jsonData, false);
 }
 

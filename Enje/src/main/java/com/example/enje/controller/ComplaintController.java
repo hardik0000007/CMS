@@ -18,10 +18,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.enje.entity.Category;
+import com.example.enje.entity.Complaint;
 import com.example.enje.entity.ComplaintDetail;
 import com.example.enje.entity.Productservice;
+import com.example.enje.entity.Status;
+import com.example.enje.service.CategoryService;
+import com.example.enje.service.ComplaintService;
 import com.example.enje.service.ComplaintsDataService;
 import com.example.enje.service.ProductAndServiceService;
+import com.example.enje.service.StatusService;
 
 @Controller
 public class ComplaintController {
@@ -29,11 +34,23 @@ public class ComplaintController {
 	@Value("${Investigation}")
 	private String investigation;
 
+	@Value("${Page}")
+	private String page;
+
 	@Autowired
 	ProductAndServiceService productAndServiceService;
 
 	@Autowired
 	ComplaintsDataService complaintsDataService;
+
+	@Autowired
+	ComplaintService complaintService;
+
+	@Autowired
+	CategoryService categoryService;
+
+	@Autowired
+	StatusService statusService;
 
 	@RequestMapping(value = "/productnService/{maincategoryid}")
 	public ModelAndView getProductAndService(@PathVariable("maincategoryid") String maincategoryid) {
@@ -79,17 +96,28 @@ public class ComplaintController {
 
 		ModelAndView mav = new ModelAndView();
 
-		System.out.println(whichPage.get());
-
 		List<ComplaintDetail> searchComplaintDetail = complaintsDataService.findTop6BySearchComplaint(
 				complaintDetail.getComplaintId(), complaintDetail.getCusomerNumber(),
 				session.getAttribute("username").toString());
 
-		System.out.println("searchComplaint-->" + searchComplaintDetail.size());
+		if (page.equalsIgnoreCase(whichPage.get())) {
+			mav.setViewName("fcrinvestigationUpdate");
+			List<Complaint> complaintTypes = complaintService.findAll();
+			List<Category> categoryList = categoryService.findAll();
+			List<Status> statusList = statusService.findAll();
 
-		mav.setViewName("searchComplaint");
-		mav.addObject("complaintData", searchComplaintDetail);
-		mav.addObject("dataAvailabel", searchComplaintDetail != null ? "true" : "false");
-		return null;
+			mav.addObject("complaintTypes", complaintTypes);
+			mav.addObject("categoryList", categoryList);
+			mav.addObject("statusList", statusList);
+			System.out.println("data-->" + searchComplaintDetail.get(0).getProductservice().getMainProdService());
+			System.out.println("value-->" + searchComplaintDetail.get(0).getComplaint().getComplaintType());
+			mav.addObject("complaintData", searchComplaintDetail.get(0));
+		} else {
+			mav.setViewName("searchComplaint");
+			mav.addObject("complaintData", searchComplaintDetail);
+			mav.addObject("dataAvailabel", searchComplaintDetail != null ? "true" : "false");
+		}
+
+		return mav;
 	}
 }
