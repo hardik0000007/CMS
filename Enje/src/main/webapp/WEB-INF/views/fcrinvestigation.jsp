@@ -69,7 +69,7 @@
 				<td>
 					<div>
 						<input type="text" name="mobileno" id="mobileno" size="10"
-							maxlength="10"
+							maxlength="10" value=""
 							style="overflow: initial; border: 2px outset #000000;">
 					</div>
 				</td>
@@ -77,7 +77,7 @@
 				<td colspan="3">
 					<div>
 						<input type="text" name="emailid" id="emailid" size="40"
-							maxlength="40"
+							maxlength="40" value=""
 							style="overflow: initial; border: 2px outset #000000;">
 					</div>
 				</td>
@@ -86,7 +86,7 @@
 				<td>Reason</td>
 				<td colspan="5">
 					<div>
-						<textarea id="reason" maxlength="3000" rows="5" cols="70"
+						<textarea id="reason" maxlength="350" rows="5" cols="70"
 							style="align-content: left; overflow: initial; border: 2px outset #000000;">
 							</textarea>
 					</div>

@@ -12,9 +12,9 @@ function resetProdnService() {
 
 function submitForm() {
 	var flag = false;
-	var form = document.getElementById("mainForm");
-	var fieldvalue = form.elements["mobileno"].value;
-	
+	var form = document.getElementById("complaintForm");
+	// var fieldvalue = form.elements["mobileno"].value;
+
 	if (validateCombo("category", "Category")
 			&& validateCombo("productnservice", "Product & Service")
 			&& validate_phonno(form, "mobileno", "Mobile number", true)
@@ -40,33 +40,35 @@ function submitForm() {
 		var emailid = document.getElementById("emailid").value;
 		var reason = document.getElementById("reason").value;
 		var status = document.getElementById("status").value;
-		
+
 		var startDate = new Date(raisedDate);
 
 		var JSONObject = {
-				'complaint':cType,
-				'startDate':startDate.toJSON(),
-				'phoneNo' : mobileno,
-				'email' : emailid,
-				'reason' : reason,
-				'cusomerNumber' : customerNumber,
-				'complaint':{
-					'cid' : cType
-				},
-				'category' : {
-					'mainCategoryId' : category
-				},
-				'productservice' : {
-					'mainProdServiceId' : productnservice
-				},
-				'status' : {
-					'statusId' : status
-				}
+			'complaint' : cType,
+			'startDate' : startDate.toJSON(),
+			'phoneNo' : mobileno,
+			'email' : emailid,
+			'cusomerNumber' : customerNumber,
+			'complaintReasons' : [ {
+				'complaintReason' : reason
+			} ],
+			'complaint' : {
+				'cid' : cType
+			},
+			'category' : {
+				'mainCategoryId' : category
+			},
+			'productservice' : {
+				'mainProdServiceId' : productnservice
+			},
+			'status' : {
+				'statusId' : status
+			}
 		};
-		
+
 		jsonData = JSON.stringify(JSONObject);
 		getData_sync("/saveComplaint/", 'displayForm', jsonData, false);
-		
+
 	}
 }
 
@@ -77,4 +79,11 @@ function validateCombo(cmbId, msg) {
 		return false;
 	}
 	return true;
+}
+
+function updateCancel() {
+	document.getElementById('complaintDiv').style.display = '';
+	document.getElementById('fcrinvestigationDiv').style.display = 'none';
+	document.getElementById('insertComplaintForm').style.display = 'none';
+	document.getElementById('updateComplaintForm').style.display = 'none';
 }

@@ -15,7 +15,7 @@
 						alt="Search..." align="right"
 						style="height: 20px; padding-right: 10px"
 						onclick="changeView('view')" />
-				</h5>
+				</h4>
 			</div>
 			<jsp:include page="search.jsp">
 				<jsp:param name="userData" value="${user}"></jsp:param>

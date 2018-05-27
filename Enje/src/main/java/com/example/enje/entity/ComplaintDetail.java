@@ -1,15 +1,18 @@
 package com.example.enje.entity;
 
+import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -17,8 +20,9 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "complaintdetail")
-public class ComplaintDetail {
+public class ComplaintDetail implements Serializable {
 
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
@@ -53,9 +57,6 @@ public class ComplaintDetail {
 	@Column(name = "duedate")
 	private Date dueDate;
 
-	@Column(name = "reason")
-	private String reason;
-
 	@Column(name = "email")
 	private String email;
 
@@ -65,27 +66,12 @@ public class ComplaintDetail {
 	@Column(name = "cusomernumber")
 	private String cusomerNumber;
 
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "maincomplaintid")
+	private List<ComplaintReasons> complaintReasons;
+
 	public ComplaintDetail() {
 		super();
-	}
-
-	public ComplaintDetail(int id, String complaintId, Complaint complaint, Status status, String user,
-			Category category, Productservice productservice, Date startDate, Date dueDate, String reason, String email,
-			String phoneNo, String cusomerNumber) {
-		super();
-		this.id = id;
-		this.complaintId = complaintId;
-		this.complaint = complaint;
-		this.status = status;
-		this.user = user;
-		this.category = category;
-		this.productservice = productservice;
-		this.startDate = startDate;
-		this.dueDate = dueDate;
-		this.reason = reason;
-		this.email = email;
-		this.phoneNo = phoneNo;
-		this.cusomerNumber = cusomerNumber;
 	}
 
 	public int getId() {
@@ -160,14 +146,6 @@ public class ComplaintDetail {
 		this.dueDate = dueDate;
 	}
 
-	public String getReason() {
-		return reason;
-	}
-
-	public void setReason(String reason) {
-		this.reason = reason;
-	}
-
 	public String getEmail() {
 		return email;
 	}
@@ -190,6 +168,14 @@ public class ComplaintDetail {
 
 	public void setCusomerNumber(String cusomerNumber) {
 		this.cusomerNumber = cusomerNumber;
+	}
+
+	public List<ComplaintReasons> getComplaintReasons() {
+		return complaintReasons;
+	}
+
+	public void setComplaintReasons(List<ComplaintReasons> complaintReasons) {
+		this.complaintReasons = complaintReasons;
 	}
 
 }

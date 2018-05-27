@@ -37,6 +37,9 @@ public class ComplaintController {
 	@Value("${Page}")
 	private String page;
 
+	@Value("${defaultComplaint}")
+	private String defaultComplaint;
+
 	@Autowired
 	ProductAndServiceService productAndServiceService;
 
@@ -71,6 +74,7 @@ public class ComplaintController {
 			HttpServletRequest request) {
 
 		String newUniqueComplaintId = complaintsDataService.getUniqueComplaintId();
+		newUniqueComplaintId = newUniqueComplaintId != null ? newUniqueComplaintId : defaultComplaint;
 
 		ComplaintDetail complaintDetailNew = new ComplaintDetail();
 
@@ -84,6 +88,7 @@ public class ComplaintController {
 		complaintDetail.setComplaintId(newUniqueComplaintId);
 
 		complaintDetailNew = complaintDetail;
+		complaintDetailNew.getComplaintReasons().get(0).setMainComplaintId(newUniqueComplaintId);
 
 		ComplaintDetail newComplaintDetail = complaintsDataService.save(complaintDetailNew);
 		return null;
@@ -100,6 +105,8 @@ public class ComplaintController {
 				complaintDetail.getComplaintId(), complaintDetail.getCusomerNumber(),
 				session.getAttribute("username").toString());
 
+		System.out.println(searchComplaintDetail.get(0).getComplaintReasons().get(0).getComplaintReason());
+
 		if (page.equalsIgnoreCase(whichPage.get())) {
 			mav.setViewName("fcrinvestigationUpdate");
 			List<Complaint> complaintTypes = complaintService.findAll();
@@ -109,8 +116,6 @@ public class ComplaintController {
 			mav.addObject("complaintTypes", complaintTypes);
 			mav.addObject("categoryList", categoryList);
 			mav.addObject("statusList", statusList);
-			System.out.println("data-->" + searchComplaintDetail.get(0).getProductservice().getMainProdService());
-			System.out.println("value-->" + searchComplaintDetail.get(0).getComplaint().getComplaintType());
 			mav.addObject("complaintData", searchComplaintDetail.get(0));
 		} else {
 			mav.setViewName("searchComplaint");
