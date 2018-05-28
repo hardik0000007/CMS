@@ -1,5 +1,6 @@
 package com.example.enje.controller;
 
+import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -78,24 +79,32 @@ public class ComplaintController {
 	public ModelAndView saveComplaint(@RequestBody ComplaintDetail complaintDetail, HttpSession session,
 			HttpServletRequest request) {
 
-		String newUniqueComplaintId = complaintsDataService.getUniqueComplaintId();
-		newUniqueComplaintId = newUniqueComplaintId != null ? newUniqueComplaintId : defaultComplaint;
+		ModelAndView mav = new ModelAndView();
+		try {
+			String newUniqueComplaintId = complaintsDataService.getUniqueComplaintId();
+			newUniqueComplaintId = newUniqueComplaintId != null ? newUniqueComplaintId : defaultComplaint;
 
-		ComplaintDetail complaintDetailNew = new ComplaintDetail();
+			ComplaintDetail complaintDetailNew = new ComplaintDetail();
 
-		if (complaintDetail.getComplaint().getCid().equalsIgnoreCase(investigation)) {
-			GregorianCalendar cal = new GregorianCalendar();
-			cal.setTime(complaintDetail.getStartDate());
-			cal.add(Calendar.DATE, 10);
-			complaintDetail.setDueDate(cal.getTime());
+			if (complaintDetail.getComplaint().getCid().equalsIgnoreCase(investigation)) {
+				GregorianCalendar cal = new GregorianCalendar();
+				cal.setTime(complaintDetail.getStartDate());
+				cal.add(Calendar.DATE, 10);
+				complaintDetail.setDueDate(cal.getTime());
+			}
+			complaintDetail.setUser(session.getAttribute("username").toString());
+			complaintDetail.setComplaintId(newUniqueComplaintId);
+
+			complaintDetailNew = complaintDetail;
+			complaintDetailNew.getComplaintReasons().get(0).setMainComplaintId(newUniqueComplaintId);
+			ComplaintDetail newComplaintDetail = complaintsDataService.save(complaintDetailNew);
+			mav.addObject("answer", true);
+			mav.setViewName("insupdajax");
+
+		} catch (Exception ex) {
+			System.out.println(ex.toString());
+
 		}
-		complaintDetail.setUser(session.getAttribute("username").toString());
-		complaintDetail.setComplaintId(newUniqueComplaintId);
-
-		complaintDetailNew = complaintDetail;
-		complaintDetailNew.getComplaintReasons().get(0).setMainComplaintId(newUniqueComplaintId);
-
-		ComplaintDetail newComplaintDetail = complaintsDataService.save(complaintDetailNew);
 		return null;
 	}
 

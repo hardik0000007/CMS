@@ -68,6 +68,7 @@ function submitForm() {
 
 		jsonData = JSON.stringify(JSONObject);
 		getData_sync("/saveComplaint/", 'displayForm', jsonData, false);
+		alert(document.getElementById('displayForm').innerHTML);
 
 	}
 }
@@ -89,7 +90,6 @@ function updateCancel() {
 }
 
 function updateComplaint() {
-//	document.getElementById('updatereason');
 	var uReason = document.getElementById('updatereason');
 
 	if (trimfield(uReason.value) === '') {
