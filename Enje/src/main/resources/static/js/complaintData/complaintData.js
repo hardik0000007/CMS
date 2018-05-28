@@ -87,3 +87,27 @@ function updateCancel() {
 	document.getElementById('insertComplaintForm').style.display = 'none';
 	document.getElementById('updateComplaintForm').style.display = 'none';
 }
+
+function updateComplaint() {
+//	document.getElementById('updatereason');
+	var uReason = document.getElementById('updatereason');
+
+	if (trimfield(uReason.value) === '') {
+		alert("Please Provide Details!");
+		uReason.focus();
+		return false;
+	}
+
+	var originalComplaintId = document.getElementById("originalComplaintId").value;
+	var JSONObject = {
+			'mainComplaintId' : originalComplaintId,
+			'complaintReason' : uReason.value
+		};
+	
+	jsonData = JSON.stringify(JSONObject);
+	getData_sync("/updateReason/", 'displayForm', jsonData, false);
+}
+
+function trimfield(str) {
+	return str.replace(/^\s+|\s+$/g, '');
+}

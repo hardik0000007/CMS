@@ -20,9 +20,11 @@ import org.springframework.web.servlet.ModelAndView;
 import com.example.enje.entity.Category;
 import com.example.enje.entity.Complaint;
 import com.example.enje.entity.ComplaintDetail;
+import com.example.enje.entity.ComplaintReasons;
 import com.example.enje.entity.Productservice;
 import com.example.enje.entity.Status;
 import com.example.enje.service.CategoryService;
+import com.example.enje.service.ComplaintReasonsService;
 import com.example.enje.service.ComplaintService;
 import com.example.enje.service.ComplaintsDataService;
 import com.example.enje.service.ProductAndServiceService;
@@ -54,6 +56,9 @@ public class ComplaintController {
 
 	@Autowired
 	StatusService statusService;
+
+	@Autowired
+	ComplaintReasonsService complaintReasonsService;
 
 	@RequestMapping(value = "/productnService/{maincategoryid}")
 	public ModelAndView getProductAndService(@PathVariable("maincategoryid") String maincategoryid) {
@@ -125,4 +130,12 @@ public class ComplaintController {
 
 		return mav;
 	}
+
+	@RequestMapping(value = "/updateReason")
+	public ModelAndView updateReason(@RequestBody ComplaintReasons complaintReasons) {
+		ModelAndView mav = new ModelAndView();
+		complaintReasonsService.save(complaintReasons);
+		return null;
+	}
+
 }

@@ -1,12 +1,13 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
-<script
-		src="${pageContext.request.contextPath}/js/complaintData/complaintData.js"></script>
+<script src="${pageContext.request.contextPath}/js/complaintData/complaintData.js"></script>
+<input type="hidden" value="${complaintData.id}" id="originalComplaintId"/>
 <tr>
+
 	<td><label>Complaint Type</label></td>
 	<td>
 		<div>
-			<select name="cType" id="cType"
+			<select name="updatecType" id="updatecType"
 				style="overflow: initial; border: 2px outset #000000;" disabled="disabled">
 				<c:forEach items="${complaintTypes}" var="complaintTypes">
 					<option
@@ -22,20 +23,20 @@
 	<td><label>Customer Number</label></td>
 	<td>
 		<div>
-			<input type="text" name="country" maxlength="2" size="2" id="country"
+			<input type="text" name="updatecountry" maxlength="2" size="2" id="updatecountry"
 				style="overflow: initial; border: 2px outset #000000;" value="${fn:substring(complaintData.cusomerNumber, 0, 2)}" readonly="readonly"> <input
-				type="text" name="branch" maxlength="4" size="4" id="branch"
+				type="text" name="updatebranch" maxlength="4" size="4" id="updatebranch"
 				style="overflow: initial; border: 2px outset #000000;" value="${fn:substring(complaintData.cusomerNumber, 2, 6)}" readonly="readonly"> <input
-				type="text" name="acctNum" maxlength="6" size="6" id="acctNum"
+				type="text" name="updateacctNum" maxlength="6" size="6" id="updateacctNum"
 				style="overflow: initial; border: 2px outset #000000;" value="${fn:substring(complaintData.cusomerNumber, 6, 12)}" readonly="readonly"> <input
-				type="text" name="ccd" maxlength="3" size="3" id="ccd"
+				type="text" name="updateccd" maxlength="3" size="3" id="updateccd"
 				style="overflow: initial; border: 2px outset #000000;" value="${fn:substring(complaintData.cusomerNumber, 12, 15)}" readonly="readonly">
 		</div>
 	</td>
 	<td><label>Date Raise</label></td>
 	<td>
 		<div>
-			<input type="text" id="raisedDate" class="datedrop"
+			<input type="text" id="updateraisedDate" class="datedrop"
 				placeholder="Search..."
 				style="overflow: initial; border: 2px outset #000000;" value="${complaintData.startDate}">
 		</div>
@@ -45,7 +46,7 @@
 	<td><label>Category</label></td>
 	<td>
 		<div>
-			<select name="category" id="category"
+			<select name="updatecategory" id="updatecategory"
 				style="overflow: initial; border: 2px outset #000000;"
 				onchange="javascript:changeCategory(this)" disabled="disabled">
 				<option value="">--Category--</option>
@@ -61,8 +62,8 @@
 	</td>
 	<td><label>Product & Service</label></td>
 	<td colspan="3">
-		<div id="pronserv">
-			<select name="productnservice" id="productnservice"
+		<div id="updatepronserv">
+			<select name="updateproductnservice" id="updateproductnservice"
 				style="overflow: initial; border: 2px outset #000000;" disabled="disabled">
 					<option 
 					value="${complaintData.productservice.mainProdServiceId}">${complaintData.productservice.mainProdService}</option>
@@ -74,7 +75,7 @@
 	<td><label>Mobile number</label></td>
 	<td>
 		<div>
-			<input type="text" name="mobileno" id="mobileno" size="10"
+			<input type="text" name="updatemobileno" id="updatemobileno" size="10"
 				maxlength="10" value="${complaintData.phoneNo}"
 				style="overflow: initial; border: 2px outset #000000;" readonly="readonly">
 		</div>
@@ -82,7 +83,7 @@
 	<td><label>Email Id</label></td>
 	<td colspan="3">
 		<div>
-			<input type="text" name="emailid" id="emailid" size="40"
+			<input type="text" name="updateemailid" id="updateemailid" size="40"
 				maxlength="40" value="${complaintData.email}"
 				style="overflow: initial; border: 2px outset #000000;" readonly="readonly">
 		</div>
@@ -110,7 +111,7 @@
 	<td>Reason</td>
 	<td colspan="5">
 		<div>
-			<textarea id="reason" maxlength="350" rows="5" cols="70" 
+			<textarea id="updatereason" maxlength="350" rows="5" cols="70" 
 				style="align-content: left; overflow: initial; border: 2px outset #000000;"></textarea>
 		</div>
 	</td>
@@ -119,7 +120,7 @@
 	<td>Status</td>
 	<td colspan="2">
 		<div>
-			<select name="status" id="status"
+			<select name="updatestatus" id="updatestatus"
 				style="overflow: initial; border: 2px outset #000000;">
 				<c:forEach items="${statusList}" var="statusList">
 					<option 
@@ -132,9 +133,9 @@
 		</div>
 	</td>
 	<td colspan="3" ><input <c:if test="${complaintData.status.statusId eq 'c'}">style="display:none;"</c:if>type="reset" style="margin-bottom: 0px" class="ui clear button" value="Reset"
-		id="resetBtn" name="resetBtn"> <input <c:if test="${complaintData.status.statusId eq 'c'}">style="display:none;"</c:if> type="button"
-		style="margin-bottom: 0px" class="ui blue submit button" value="Update" id="submitrBtn"
-		name="submitrBtn" onclick="submitForm();"> <input
+		id="updateresetBtn" name="updateresetBtn"> <input <c:if test="${complaintData.status.statusId eq 'c'}">style="display:none;"</c:if> type="button"
+		style="margin-bottom: 0px" class="ui blue submit button" value="Update" id="updatesubmitrBtn"
+		name="updatesubmitrBtn" onclick="updateComplaint();"> <input
 		type="button" style="margin-bottom: 0px" class="ui red button" value="Cancel" id="updateCancelBtn"
 		name="updateCancelBtn" onclick="updateCancel();"></td>
 </tr>
