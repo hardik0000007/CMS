@@ -105,7 +105,7 @@ public class ComplaintController {
 			System.out.println(ex.toString());
 
 		}
-		return null;
+		return mav;
 	}
 
 	@RequestMapping(value = { "/searchComplaint",

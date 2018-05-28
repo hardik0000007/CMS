@@ -32,7 +32,6 @@ function submitForm() {
 				+ document.getElementById("branch").value
 				+ document.getElementById("acctNum").value
 				+ document.getElementById("ccd").value;
-		alert(customerNumber);
 		var raisedDate = document.getElementById("raisedDate").value;
 		var category = document.getElementById("category").value;
 		var productnservice = document.getElementById("productnservice").value;
@@ -68,8 +67,13 @@ function submitForm() {
 
 		jsonData = JSON.stringify(JSONObject);
 		getData_sync("/saveComplaint/", 'displayForm', jsonData, false);
-		alert(document.getElementById('displayForm').innerHTML);
-
+		if (document.getElementById('sucmsg').value) {
+			alert("Complaint added Successfully");
+			document.getElementById('complaintDiv').style.display = '';
+			document.getElementById('fcrinvestigationDiv').style.display = 'none';
+			document.getElementById('insertComplaintForm').style.display = 'none';
+			document.getElementById('updateComplaintForm').style.display = 'none';
+		}
 	}
 }
 
@@ -100,10 +104,10 @@ function updateComplaint() {
 
 	var originalComplaintId = document.getElementById("originalComplaintId").value;
 	var JSONObject = {
-			'mainComplaintId' : originalComplaintId,
-			'complaintReason' : uReason.value
-		};
-	
+		'mainComplaintId' : originalComplaintId,
+		'complaintReason' : uReason.value
+	};
+
 	jsonData = JSON.stringify(JSONObject);
 	getData_sync("/updateReason/", 'displayForm', jsonData, false);
 }
