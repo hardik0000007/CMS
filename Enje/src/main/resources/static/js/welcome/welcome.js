@@ -13,22 +13,41 @@ function changeView(viewPage) {
 }
 
 function searchComplaint() {
+	
+	var frmObj = document.getElementById('mainForm');
 	var compIdSearch = document.getElementById("compIdSearch").value;
 	var custNumSearch = document.getElementById("custNumSearch").value;
 
 	if (Trim(compIdSearch) === "" && Trim(custNumSearch) === "") {
 		alert("Either 'Complaint ID' or 'Customer Number' must enter.");
+		return false;
 	} else {
 
-		if (compIdSearch.length < 6) {
+		if (Trim(compIdSearch) !== '' && Trim(custNumSearch) !== "") {
+			alert("Please enter either 'Complaint ID' or 'Customer Number' not both.");
+			return false;
+		}
+
+		if (Trim(compIdSearch) !== '' && compIdSearch.length = 6 
+				&& validate_only_number() ) {
+			
+			if (!validate_only_number(frmObj, "compIdSearch", "Complaint ID", false))
+		    {
+		        document.getElementById('compIdSearch').value = "";
+		        document.getElementById('compIdSearch').focus();
+		        return false;
+		    }
+		}
+		else{
 			alert("'Complaint ID' lenght must be 6.");
 			return false;
 		}
 
-		/*
-		 * if(custNumSearch.length < 15) { alert("'Customer Number' lenght must
-		 * be 15."); return false; }
-		 */
+		  if(Trim(custNumSearch) !== '' && custNumSearch.length < 15) 
+		  { 
+			  alert("'Customer Number' lenght must be 15."); 
+			  return false; 
+		   }
 
 		var JSONObject = {
 			'complaintId' : 'Comp' + compIdSearch,

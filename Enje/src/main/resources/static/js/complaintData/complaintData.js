@@ -65,15 +65,22 @@ function submitForm() {
 			}
 		};
 
-		jsonData = JSON.stringify(JSONObject);
-		getData_sync("/saveComplaint/", 'displayForm', jsonData, false);
-		if (document.getElementById('sucmsg').value) {
-			alert("Complaint added Successfully");
-			document.getElementById('complaintDiv').style.display = '';
-			document.getElementById('fcrinvestigationDiv').style.display = 'none';
-			document.getElementById('insertComplaintForm').style.display = 'none';
-			document.getElementById('updateComplaintForm').style.display = 'none';
+		{
+			if (confirm('Are you sure you want to Save this Complaint?')) {
+				jsonData = JSON.stringify(JSONObject);
+				getData_sync("/saveComplaint/", 'displayForm', jsonData, false);
+				if (document.getElementById('sucmsg').value) {
+					alert("Complaint added Successfully. To see new added complaint you must loggedin again");
+					document.getElementById('complaintDiv').style.display = '';
+					document.getElementById('fcrinvestigationDiv').style.display = 'none';
+					document.getElementById('insertComplaintForm').style.display = 'none';
+					document.getElementById('updateComplaintForm').style.display = 'none';
+				}
+			} else {
+				return false;
+			}
 		}
+
 	}
 }
 
@@ -94,22 +101,32 @@ function updateCancel() {
 }
 
 function updateComplaint() {
-	var uReason = document.getElementById('updatereason');
+	if (confirm('Are you sure you want to Update this Complaint?')) {
+		var uReason = document.getElementById('updatereason');
 
-	if (trimfield(uReason.value) === '') {
-		alert("Please Provide Details!");
-		uReason.focus();
+		if (trimfield(uReason.value) === '') {
+			alert("Please Provide Details!");
+			uReason.focus();
+			return false;
+		}
+
+		var originalComplaintId = document
+				.getElementById("originalComplaintId").value;
+		var JSONObject = {
+			'mainComplaintId' : originalComplaintId,
+			'complaintReason' : uReason.value
+		};
+
+		jsonData = JSON.stringify(JSONObject);
+		getData_sync("/updateReason/", 'displayForm', jsonData, false);
+		if (document.getElementById('sucmsg').value) {
+			alert("Complaint update Successfully.");
+			updateCancel();
+		}
+	} else {
 		return false;
 	}
 
-	var originalComplaintId = document.getElementById("originalComplaintId").value;
-	var JSONObject = {
-		'mainComplaintId' : originalComplaintId,
-		'complaintReason' : uReason.value
-	};
-
-	jsonData = JSON.stringify(JSONObject);
-	getData_sync("/updateReason/", 'displayForm', jsonData, false);
 }
 
 function trimfield(str) {

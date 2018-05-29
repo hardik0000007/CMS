@@ -144,7 +144,9 @@ public class ComplaintController {
 	public ModelAndView updateReason(@RequestBody ComplaintReasons complaintReasons) {
 		ModelAndView mav = new ModelAndView();
 		complaintReasonsService.save(complaintReasons);
-		return null;
+		mav.addObject("answer", true);
+		mav.setViewName("insupdajax");
+		return mav;
 	}
 
 }
