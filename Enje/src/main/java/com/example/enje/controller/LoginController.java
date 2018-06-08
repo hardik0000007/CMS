@@ -1,5 +1,6 @@
 package com.example.enje.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,12 +26,16 @@ import com.example.enje.service.ComplaintService;
 import com.example.enje.service.ComplaintsDataService;
 import com.example.enje.service.LoginService;
 import com.example.enje.service.StatusService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
 public class LoginController {
 
 	@Value("${loginMessage}")
 	private String loginMessage;
+
+	@Value("${Role}")
+	private String role;
 
 	@Autowired
 	LoginService loginService;
@@ -63,6 +68,24 @@ public class LoginController {
 		ModelAndView mav = null;
 		User findUser = loginService.findByUsernamePassword(user.getUsername(), user.getPassword());
 
+		ObjectMapper mapper = new ObjectMapper();
+
+		List<String> list = new ArrayList<String>();
+		list.add("List A");
+		list.add("List B");
+		list.add("List C");
+		list.add("List D");
+		list.add("List E");
+
+		String json = "";
+		String complaintJson = "";
+		try {
+			json = mapper.writeValueAsString(list);
+			complaintJson = mapper.writeValueAsString(complaintsDataService.getComplaintWiseCount());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		if (null != findUser) {
 
 			session.setAttribute("username", user.getUsername());
@@ -73,8 +96,6 @@ public class LoginController {
 			List<Category> categoryList = categoryService.findAll();
 			List<Status> statusList = statusService.findAll();
 
-			System.out.println("In Login Controller-->" + complaintTypes.size());
-
 			mav = new ModelAndView("welcome");
 			mav.addObject("userData", findUser);
 			mav.addObject("complaintData", complaintDetail);
@@ -83,6 +104,12 @@ public class LoginController {
 			mav.addObject("categoryList", categoryList);
 			mav.addObject("statusList", statusList);
 			mav.addObject("user", user.getUsername());
+
+			if (findUser.getUserRole().getRole().equalsIgnoreCase(role)) {
+				mav.addObject("complaintWiseCount", complaintJson);
+			}
+
+			mav.addObject("list", json);
 		} else {
 			mav = new ModelAndView("login");
 			mav.addObject("loginMessage", "Username or Password is wrong!!");

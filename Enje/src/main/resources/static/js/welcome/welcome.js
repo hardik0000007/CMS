@@ -28,8 +28,7 @@ function searchComplaint() {
 			return false;
 		}
 
-		if (Trim(compIdSearch) !== '' && compIdSearch.length = 6 
-				&& validate_only_number() ) {
+		if (Trim(compIdSearch) !== '' && compIdSearch.length === 6) {
 			
 			if (!validate_only_number(frmObj, "compIdSearch", "Complaint ID", false))
 		    {

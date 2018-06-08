@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -41,24 +42,20 @@ public class User {
 	@ManyToOne
 	private City city;
 
+	@JoinColumn(name = "roleid")
+	@OneToOne
+	private UserRole userRole;
+
 	public User() {
 		super();
 	}
 
-	public User(Long id, String username, String password, String firstName, String lastName, String email,
-			String address, String phone, String photo, String designation, City city) {
-		super();
-		this.id = id;
-		this.username = username;
-		this.password = password;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.email = email;
-		this.address = address;
-		this.phone = phone;
-		this.photo = photo;
-		this.designation = designation;
-		this.city = city;
+	public UserRole getUserRole() {
+		return userRole;
+	}
+
+	public void setUserRole(UserRole userRole) {
+		this.userRole = userRole;
 	}
 
 	public Long getId() {

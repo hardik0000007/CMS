@@ -54,7 +54,7 @@
 
 							<div class="ui dropdown item">
 								<img class="ui mini circular image"
-									src="${pageContext.request.contextPath}/images/avatar/people/enid.png"
+									src="${pageContext.request.contextPath}${userData.photo}"
 									alt="label-image" />
 								<div class="menu">
 									<a class="item" href="mail.html">Inbox</a> <a class="item"
@@ -92,25 +92,41 @@
 								</div>
 							</div>
 						</div>
-						<div class="row">
-							<jsp:include page="complaintData.jsp">
-								<jsp:param name="complaintData" value="${complaintData}"></jsp:param>
-								<jsp:param name="dataAvailabel" value="${dataAvailabel}"></jsp:param>
-								<jsp:param name="complaintTypes" value="${complaintTypes}"></jsp:param>
-								<jsp:param name="categoryList" value="${categoryList}"></jsp:param>
-								<jsp:param name="statusList" value="${statusList}"></jsp:param>
-								<jsp:param name="user" value="${user}"></jsp:param>
-							</jsp:include>
-						</div>
+						<c:choose>
+							<c:when test="${userData.userRole.role eq 'Agent'}">
+								<div class="row">
+									<jsp:include page="complaintData.jsp">
+										<jsp:param name="complaintData" value="${complaintData}"></jsp:param>
+										<jsp:param name="dataAvailabel" value="${dataAvailabel}"></jsp:param>
+										<jsp:param name="complaintTypes" value="${complaintTypes}"></jsp:param>
+										<jsp:param name="categoryList" value="${categoryList}"></jsp:param>
+										<jsp:param name="statusList" value="${statusList}"></jsp:param>
+										<jsp:param name="user" value="${user}"></jsp:param>
+									</jsp:include>
+								</div>
+							</c:when>
+							<c:when test="${userData.userRole.role eq 'Admin'}">
+								<div class="row">
+									<jsp:include page="admin/chart.jsp">
+										<jsp:param name="user" value="${user}"></jsp:param>
+										<jsp:param name="list" value="${list}"></jsp:param>
+										<jsp:param name="complaintWiseCount" value="${complaintWiseCount}"></jsp:param>
+									</jsp:include>
+								</div>
+							</c:when>
+						</c:choose>
 					</div>
 				</div>
 			</div>
 		</div>
 	</form>
+	
+	<script src="${pageContext.request.contextPath}/js/jquery-ui.min.js"></script>
 	<script src="${pageContext.request.contextPath}/js/jquery-2.1.4.min.js"></script>
 	<script src="${pageContext.request.contextPath}/dist/semantic.min.js"></script>
 	<script src="${pageContext.request.contextPath}/js/AjaxFunctions.js"></script>
 	<script src="${pageContext.request.contextPath}/js/validations.min.js"></script>
+<!-- 	<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script> -->
 	<script
 		src="${pageContext.request.contextPath}/plugins/cookie/js.cookie.js"></script>
 	<script
