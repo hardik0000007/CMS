@@ -71,7 +71,7 @@ public class ComplaintController {
 
 		mav.addObject("action", "prodnservdata");
 		mav.addObject("productserviceData", productserviceData);
-		mav.setViewName("fcrinvestigation_ajax");
+		mav.setViewName("ajax");
 		return mav;
 	}
 
@@ -144,6 +144,33 @@ public class ComplaintController {
 	public ModelAndView updateReason(@RequestBody ComplaintReasons complaintReasons) {
 		ModelAndView mav = new ModelAndView();
 		complaintReasonsService.save(complaintReasons);
+		mav.addObject("answer", true);
+		mav.setViewName("insupdajax");
+		return mav;
+	}
+
+	@RequestMapping(value = "/chart/{year}/{month}")
+	public ModelAndView chartData(@PathVariable("year") int year, @PathVariable("month") int month) {
+		ModelAndView mav = new ModelAndView();
+		// complaintReasonsService.save(complaintReasons);
+
+		ComplaintDetail complaintDetail = new ComplaintDetail();
+
+		GregorianCalendar gc = new GregorianCalendar(year, month - 1, 1);
+
+		java.util.Date monthStartDate = new java.util.Date(gc.getTime().getTime());
+
+		Calendar c = Calendar.getInstance();
+		c.setTime(monthStartDate);
+		c.set(Calendar.DAY_OF_MONTH, c.getActualMaximum(Calendar.DAY_OF_MONTH));
+
+		int lastDate = Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH);
+
+		gc = new GregorianCalendar(year, month - 1, lastDate);
+		java.util.Date monthEndDate = new java.util.Date(gc.getTime().getTime());
+
+		System.out.println(complaintsDataService.getComplaintWiseCount(monthStartDate, monthEndDate).size());
+
 		mav.addObject("answer", true);
 		mav.setViewName("insupdajax");
 		return mav;

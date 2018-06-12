@@ -26,6 +26,7 @@ import com.example.enje.service.ComplaintService;
 import com.example.enje.service.ComplaintsDataService;
 import com.example.enje.service.LoginService;
 import com.example.enje.service.StatusService;
+import com.example.enje.service.UtilityService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
@@ -51,6 +52,9 @@ public class LoginController {
 
 	@Autowired
 	StatusService statusService;
+
+	@Autowired
+	UtilityService utilityService;
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ModelAndView init(Model model) {
@@ -81,7 +85,8 @@ public class LoginController {
 		String complaintJson = "";
 		try {
 			json = mapper.writeValueAsString(list);
-			complaintJson = mapper.writeValueAsString(complaintsDataService.getComplaintWiseCount());
+			// complaintJson =
+			// mapper.writeValueAsString(complaintsDataService.getComplaintWiseCount());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -106,6 +111,9 @@ public class LoginController {
 			mav.addObject("user", user.getUsername());
 
 			if (findUser.getUserRole().getRole().equalsIgnoreCase(role)) {
+
+				mav.addObject("lastYears", utilityService.getLastFourYear());
+				mav.addObject("forYear", "years");
 				mav.addObject("complaintWiseCount", complaintJson);
 			}
 

@@ -44,7 +44,24 @@
 					src="${pageContext.request.contextPath}/images/thumblogo.png"
 					alt="stagblogo" class="displaynone" />
 				</a>
-				<div class="ui divider"></div>
+				<div class="ui accordion inverted">
+					<a class="title item"> <i
+						class="ion-speedometer titleIcon icon"></i> Employee <i
+						class="dropdown icon"></i>
+					</a>
+					<div class="content">
+						<a class="item" href="index-2.html"> Add / Edit / Delete </a>
+					</div>
+					<a class="title item"> <i
+						class="ion-arrow-graph-up-right titleIcon icon"></i> Chart <i
+						class="dropdown icon"></i>
+					</a>
+					<div class="content">
+						<a class="item" href="#" onclick="changePage('complaint')"> Complaint </a>
+					</div>
+					
+				</div>
+<!-- 				<div class="ui divider"></div> -->
 			</div>
 			<div class="pusher">
 				<div class="navslide navwrap">
@@ -110,7 +127,8 @@
 									<jsp:include page="admin/chart.jsp">
 										<jsp:param name="user" value="${user}"></jsp:param>
 										<jsp:param name="list" value="${list}"></jsp:param>
-										<jsp:param name="complaintWiseCount" value="${complaintWiseCount}"></jsp:param>
+										<jsp:param name="lastYears"
+											value="${lastYears}"></jsp:param>
 									</jsp:include>
 								</div>
 							</c:when>
@@ -120,13 +138,13 @@
 			</div>
 		</div>
 	</form>
-	
+
 	<script src="${pageContext.request.contextPath}/js/jquery-ui.min.js"></script>
 	<script src="${pageContext.request.contextPath}/js/jquery-2.1.4.min.js"></script>
 	<script src="${pageContext.request.contextPath}/dist/semantic.min.js"></script>
 	<script src="${pageContext.request.contextPath}/js/AjaxFunctions.js"></script>
 	<script src="${pageContext.request.contextPath}/js/validations.min.js"></script>
-<!-- 	<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script> -->
+	<!-- 	<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script> -->
 	<script
 		src="${pageContext.request.contextPath}/plugins/cookie/js.cookie.js"></script>
 	<script

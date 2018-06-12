@@ -13,7 +13,7 @@ function changeView(viewPage) {
 }
 
 function searchComplaint() {
-	
+
 	var frmObj = document.getElementById('mainForm');
 	var compIdSearch = document.getElementById("compIdSearch").value;
 	var custNumSearch = document.getElementById("custNumSearch").value;
@@ -29,24 +29,22 @@ function searchComplaint() {
 		}
 
 		if (Trim(compIdSearch) !== '' && compIdSearch.length === 6) {
-			
-			if (!validate_only_number(frmObj, "compIdSearch", "Complaint ID", false))
-		    {
-		        document.getElementById('compIdSearch').value = "";
-		        document.getElementById('compIdSearch').focus();
-		        return false;
-		    }
-		}
-		else{
+
+			if (!validate_only_number(frmObj, "compIdSearch", "Complaint ID",
+					false)) {
+				document.getElementById('compIdSearch').value = "";
+				document.getElementById('compIdSearch').focus();
+				return false;
+			}
+		} else {
 			alert("'Complaint ID' lenght must be 6.");
 			return false;
 		}
 
-		  if(Trim(custNumSearch) !== '' && custNumSearch.length < 15) 
-		  { 
-			  alert("'Customer Number' lenght must be 15."); 
-			  return false; 
-		   }
+		if (Trim(custNumSearch) !== '' && custNumSearch.length < 15) {
+			alert("'Customer Number' lenght must be 15.");
+			return false;
+		}
 
 		var JSONObject = {
 			'complaintId' : 'Comp' + compIdSearch,
@@ -58,7 +56,6 @@ function searchComplaint() {
 		document.getElementById("searchComplaintDiv").style.display = '';
 		getData_sync("/searchComplaint/", 'searchComplaintDiv', jsonData, false);
 	}
-
 }
 
 function searchCancel() {
@@ -82,3 +79,12 @@ function getComplaintDetail(complaintId) {
 	getData_sync("/searchComplaint/updatePage", 'updateComplaintForm',
 			jsonData, false);
 }
+
+function changePage(page) {
+	
+	if (page === 'complaint') {
+		document.getElementById('complaintChart').style.display="";
+	}
+}
+
+
