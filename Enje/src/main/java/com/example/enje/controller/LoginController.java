@@ -85,8 +85,7 @@ public class LoginController {
 		String complaintJson = "";
 		try {
 			json = mapper.writeValueAsString(list);
-			// complaintJson =
-			// mapper.writeValueAsString(complaintsDataService.getComplaintWiseCount());
+			complaintJson = mapper.writeValueAsString(complaintsDataService.getComplaintWiseCount());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

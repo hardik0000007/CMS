@@ -63,4 +63,16 @@ public class ComplaintsDataService {
 		return results;
 	}
 
+	public List<Object[]> getComplaintWiseCount() {
+		EntityManager entityManager = entityManagerFactory.createEntityManager();
+
+		@SuppressWarnings("unchecked")
+		List<Object[]> results = entityManager
+				.createNativeQuery(
+						"SELECT A.maincategory, COUNT(C.maincategoryid) AS total from complaintdetail AS C INNER JOIN category AS A ON C.maincategoryid = A.maincategoryid group by C.maincategoryid")
+				.getResultList();
+
+		return results;
+	}
+
 }

@@ -127,6 +127,7 @@
 									<jsp:include page="admin/chart.jsp">
 										<jsp:param name="user" value="${user}"></jsp:param>
 										<jsp:param name="list" value="${list}"></jsp:param>
+										<jsp:param name="complaintWiseCount" value="${complaintWiseCount}"></jsp:param>
 										<jsp:param name="lastYears"
 											value="${lastYears}"></jsp:param>
 									</jsp:include>

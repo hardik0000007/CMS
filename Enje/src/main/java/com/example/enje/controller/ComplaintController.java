@@ -2,6 +2,7 @@ package com.example.enje.controller;
 
 import java.sql.SQLException;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Optional;
@@ -30,6 +31,8 @@ import com.example.enje.service.ComplaintService;
 import com.example.enje.service.ComplaintsDataService;
 import com.example.enje.service.ProductAndServiceService;
 import com.example.enje.service.StatusService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
 public class ComplaintController {
@@ -150,15 +153,14 @@ public class ComplaintController {
 	}
 
 	@RequestMapping(value = "/chart/{year}/{month}")
-	public ModelAndView chartData(@PathVariable("year") int year, @PathVariable("month") int month) {
+	public ModelAndView chartData(@PathVariable("year") int year, @PathVariable("month") int month)
+			throws JsonProcessingException {
 		ModelAndView mav = new ModelAndView();
-		// complaintReasonsService.save(complaintReasons);
-
-		ComplaintDetail complaintDetail = new ComplaintDetail();
 
 		GregorianCalendar gc = new GregorianCalendar(year, month - 1, 1);
+		ObjectMapper mapper = new ObjectMapper();
 
-		java.util.Date monthStartDate = new java.util.Date(gc.getTime().getTime());
+		Date monthStartDate = new Date(gc.getTime().getTime());
 
 		Calendar c = Calendar.getInstance();
 		c.setTime(monthStartDate);
@@ -167,12 +169,14 @@ public class ComplaintController {
 		int lastDate = Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH);
 
 		gc = new GregorianCalendar(year, month - 1, lastDate);
-		java.util.Date monthEndDate = new java.util.Date(gc.getTime().getTime());
+		Date monthEndDate = new Date(gc.getTime().getTime());
 
-		System.out.println(complaintsDataService.getComplaintWiseCount(monthStartDate, monthEndDate).size());
+		String complaintJson = mapper
+				.writeValueAsString(complaintsDataService.getComplaintWiseCount(monthStartDate, monthEndDate));
 
-		mav.addObject("answer", true);
-		mav.setViewName("insupdajax");
+		mav.addObject("complaintWiseCount", complaintJson);
+		mav.addObject("action", "chart");
+		mav.setViewName("ajax");
 		return mav;
 	}
 

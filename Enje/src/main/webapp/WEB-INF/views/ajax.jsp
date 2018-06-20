@@ -13,11 +13,17 @@
 	</c:when>
 	<c:when test="${action eq 'month'}">
 		<select name="month" id="month"
-			style="overflow: initial; border: 2px outset #000000;" onclick="selectMonthChart(this);">
+			style="overflow: initial; border: 2px outset #000000;"
+			onchange="selectMonthChart(this);anotherCall();">
 			<option value="">--Month--</option>
 			<c:forEach items="${months}" var="month">
 				<option value="${month.key}">${month.value}</option>
 			</c:forEach>
 		</select>
+	</c:when>
+	<c:when test="${action eq 'chart'}">
+		<jsp:include page="admin/complaintchart.jsp">
+			<jsp:param name="complaintWiseCount" value="${complaintWiseCount}"></jsp:param>
+		</jsp:include>
 	</c:when>
 </c:choose>

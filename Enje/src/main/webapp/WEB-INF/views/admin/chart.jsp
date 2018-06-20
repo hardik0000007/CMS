@@ -5,38 +5,6 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <script type="text/javascript"
 	src="https://www.gstatic.com/charts/loader.js"></script>
-<script type="text/javascript">
-	// var complaintWiseCount = JSON.stringify(${complaintWiseCount});
-	// var finalData=[];
-	// var Header= ['Category', 'Monthly Count'];
-	// finalData.push(Header);
-
-	// for ( var key in ${complaintWiseCount}) {
-
-	// 	var temp=[];
-	// 	temp.push(${complaintWiseCount}[key][0]);
-	// 	temp.push(${complaintWiseCount}[key][1]);
-	// 	finalData.push(temp);
-	// }
-
-	// 	google.charts.load("current", {
-	// 		packages : [ "corechart" ]
-	// 	});
-
-	// 	google.charts.setOnLoadCallback(drawChart);
-	// 	function drawChart() {
-	// 		var data = google.visualization.arrayToDataTable(finalData);
-
-	// 		var options = {
-	// 			title : 'Monthly Complaint Categorywise',
-	// 			is3D : true,
-	// 		};
-
-	// 		var chart = new google.visualization.PieChart(document
-	// 				.getElementById('piechart_3d'));
-	// 		chart.draw(data, options);
-	// 	}
-</script>
 </head>
 <body>
 	<form id="chartForm">
@@ -71,7 +39,7 @@
 						</table>
 					</div>
 				</div>
-				<div id="piechart_3d" style="width: 500px; height: 250px;"></div>
+				<div id="piechart_3d" ></div>
 			</div>
 		</div>
 	</form>
